@@ -10,6 +10,7 @@ using Sitecore.XConnect.Web.Infrastructure.Serialization;
 using System;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Web.Hosting;
 
 namespace Sitecore.Support.XConnect.Web
@@ -44,7 +45,12 @@ namespace Sitecore.Support.XConnect.Web
       XdbRuntimeModel runtimeModel = new XdbRuntimeModel(xdbModelResolver.KnownModels.ToArray<XdbModel>());
       services.Add(ServiceDescriptor.Singleton<XdbEdmModel>((Func<IServiceProvider, XdbEdmModel>)(p => XdbEdmModel.Create((XdbModel)runtimeModel, p.GetService<IMediaTypeFormatterConfiguration>()))));
       services.Add(ServiceDescriptor.Singleton<XdbModel>((Func<IServiceProvider, XdbModel>)(p => p.GetService<XdbEdmModel>().Model)));
-      services.Add(ServiceDescriptor.Singleton<ExpandOptionsParser>((Func<IServiceProvider, ExpandOptionsParser>)(p => new ExpandOptionsParser(p.GetService<XdbEdmModel>()))));
+
+      var constructor =
+        typeof(ExpandOptionsParser).GetConstructor(BindingFlags.NonPublic | BindingFlags.Instance, null, new Type[] { typeof(XdbEdmModel) },
+          null);
+
+      services.Add(ServiceDescriptor.Singleton<ExpandOptionsParser>((Func<IServiceProvider, ExpandOptionsParser>)(p => (ExpandOptionsParser)constructor.Invoke(new object[] { p.GetService<XdbEdmModel>() }))));
     }
   }
 }
