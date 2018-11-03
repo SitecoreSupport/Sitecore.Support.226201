@@ -15,13 +15,13 @@ using System.Web.Hosting;
 
 namespace Sitecore.Support.XConnect.Web
 {
-  internal static class Extensions
+  public static class Extensions
   {
     private static FileSystemWatcher _modelFolderWatcher;
 
     public static void UseWebPerformanceCounters(this IServiceCollection services)
     {
-      string path = HostingEnvironment.MapPath("~/App_Data/Diagnostics");
+      string path = MapPath("~/App_Data/Diagnostics");
       string instanceName = HostingEnvironment.SiteName;
       services.TryAdd(ServiceDescriptor.Singleton<ICountersInstance>((Func<IServiceProvider, ICountersInstance>)(provider => (ICountersInstance)new CountersInstance(instanceName, path))));
       services.TryAdd(ServiceDescriptor.Singleton(typeof(ICountersInstance<>), typeof(CountersInstance<>)));
@@ -32,11 +32,15 @@ namespace Sitecore.Support.XConnect.Web
       services.AddSingleton(typeof(IXdbOperationResultFormatter), (object)XdbOperationFormatterRegistry.CreateDefault());
       services.Add(ServiceDescriptor.Scoped(typeof(XdbCollectionService), typeof(XdbCollectionService)));
       services.Add(ServiceDescriptor.Scoped(typeof(OperationResponseMapper), typeof(OperationResponseMapper)));
-      FileBasedXdbModelResolver xdbModelResolver = new FileBasedXdbModelResolver(HostingEnvironment.MapPath("~/App_Data/Models"));
+    }
+
+    public static void UseXConnectModel(this IServiceCollection services)
+    {
+      FileBasedXdbModelResolver xdbModelResolver = new FileBasedXdbModelResolver(MapPath("~/App_Data/Models"));
       xdbModelResolver.TryAdd(XConnectCoreModel.Instance);
       xdbModelResolver.LoadModels();
       services.Add(ServiceDescriptor.Singleton(typeof(IXdbModelResolver), (object)xdbModelResolver));
-      _modelFolderWatcher = new FileSystemWatcher(HostingEnvironment.MapPath("~/App_Data/Models"));
+      _modelFolderWatcher = new FileSystemWatcher(MapPath("~/App_Data/Models"));
       _modelFolderWatcher.Changed += (FileSystemEventHandler)((sender, args) => HostingEnvironment.InitiateShutdown());
       _modelFolderWatcher.Renamed += (RenamedEventHandler)((sender, args) => HostingEnvironment.InitiateShutdown());
       _modelFolderWatcher.Created += (FileSystemEventHandler)((sender, args) => HostingEnvironment.InitiateShutdown());
@@ -51,6 +55,13 @@ namespace Sitecore.Support.XConnect.Web
           null);
 
       services.Add(ServiceDescriptor.Singleton<ExpandOptionsParser>((Func<IServiceProvider, ExpandOptionsParser>)(p => (ExpandOptionsParser)constructor.Invoke(new object[] { p.GetService<XdbEdmModel>() }))));
+    }
+
+    internal static string MapPath(string path)
+    {
+      if (HostingEnvironment.IsHosted)
+        return HostingEnvironment.MapPath(path);
+      return Path.Combine(AppContext.BaseDirectory, path.Replace("~/", string.Empty));
     }
   }
 }
