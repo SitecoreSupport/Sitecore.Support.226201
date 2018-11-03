@@ -1,11 +1,9 @@
-﻿using Sitecore.Support.XConnect.Web;
+﻿using System;
+using Microsoft.Extensions.DependencyInjection;
+using Sitecore.XConnect.DependencyInjection.Abstractions;
 
 namespace Sitecore.Support.XConnect.Web
 {
-  using Microsoft.Extensions.DependencyInjection;
-  using Sitecore.XConnect.DependencyInjection.Abstractions;
-  using System;
-
   [CLSCompliant(false)]
   public class XConnectServicesConfiguration : IXConnectServicesConfiguration
   {

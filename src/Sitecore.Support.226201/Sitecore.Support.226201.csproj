@@ -85,14 +85,17 @@
     <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConditionalXConnectModelConfigurator.cs" />
-    <Compile Include="XConnectServicesConfiguration.cs" />
-    <Compile Include="Extensions.cs" />
+    <Compile Include="Xdb\MarketingAutomation\Web\XConnect\ConditionalXConnectModelConfigurator.cs" />
+    <Compile Include="XConnect\Web\XConnectServicesConfiguration.cs" />
+    <Compile Include="XConnect\Web\Extensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Data\Config\sitecore\MarketingAutomation\sc.z_XConnect.MarketingAutomation.Operations.Web.Model.xml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

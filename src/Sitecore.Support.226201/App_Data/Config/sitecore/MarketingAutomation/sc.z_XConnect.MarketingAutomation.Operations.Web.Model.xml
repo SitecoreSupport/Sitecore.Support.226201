@@ -1,0 +1,19 @@
+﻿<Settings>
+  <Sitecore>
+    <XConnect>
+      <MarketingAutomation>
+        <Operations>
+          <Web>
+            <Services>
+              <MarketingAutomation.Web.ConditionalXConnectModelConfigurator>
+                <Type>Sitecore.Support.Xdb.MarketingAutomation.Web.XConnect.ConditionalXConnectModelConfigurator, Sitecore.Support.226201</Type>
+                <As>Sitecore.XConnect.DependencyInjection.Abstractions.IXConnectServicesConfiguration, Sitecore.XConnect.DependencyInjection</As>
+                <LifeTime>Singleton</LifeTime>
+              </MarketingAutomation.Web.ConditionalXConnectModelConfigurator>
+            </Services>
+          </Web>
+        </Operations>
+      </MarketingAutomation>
+    </XConnect>
+  </Sitecore>
+</Settings>

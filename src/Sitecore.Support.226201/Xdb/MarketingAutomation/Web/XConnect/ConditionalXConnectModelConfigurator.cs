@@ -1,9 +1,9 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System.Linq;
+using Microsoft.Extensions.DependencyInjection;
 using Sitecore.Framework.Conditions;
+using Sitecore.Support.XConnect.Web;
 using Sitecore.XConnect.DependencyInjection.Abstractions;
 using Sitecore.XConnect.Web.Infrastructure;
-using System.Linq;
-using Sitecore.Support.XConnect.Web;
 
 namespace Sitecore.Support.Xdb.MarketingAutomation.Web.XConnect
 {

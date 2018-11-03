@@ -1,4 +1,9 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Web.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Sitecore.XConnect.Diagnostics.Telemetry;
 using Sitecore.XConnect.Schema;
@@ -7,11 +12,6 @@ using Sitecore.XConnect.Service;
 using Sitecore.XConnect.Web.Infrastructure;
 using Sitecore.XConnect.Web.Infrastructure.Operations;
 using Sitecore.XConnect.Web.Infrastructure.Serialization;
-using System;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Web.Hosting;
 
 namespace Sitecore.Support.XConnect.Web
 {
